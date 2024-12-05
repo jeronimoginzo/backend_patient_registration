@@ -50,10 +50,11 @@ class RegisterPatientRequest extends FormRequest
     public function messages(): array
     {
         return [
-            '*.required' => 'Es necesario completar el campo ":attribute" para registrarse.',
-            '*.max' => 'El campo ":attribute" no puede superar los :max caracteres.',
-            '*.email' => 'El campo ":attribute" debe tener un formato válido.',
-            'file_url.required' => 'Debe subir una foto de su documento para poder registrarse.',
+            '*.required' => 'The ":attribute" field is required to register.',
+            '*.max' => 'The ":attribute" field cannot exceed :max characters.',
+            '*.email' => 'The ":attribute" field must have a valid format.',
+            'file_url.required' => 'You must upload a photo of your document to register.',
+
         ];
     }
 }

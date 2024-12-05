@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Requests\RegisterPatientRequest;
+use App\Http\Requests\PatientData;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +25,7 @@ Route::get('/status', function () {
     return response()->json(['status' => 'API is working!'], 200);
 });
 
-Route::get('/hello', [UsersController::class, 'index']);
+Route::get('/list', [UsersController::class, 'list']);
 
 
-Route::post('/test', function (Request $request) {
-    return response()->json(['message' => 'POST request received.']);
-});
-Route::post('/register', [UsersController::class, 'actionRegisterPatient'])->withoutMiddleware('auth:api');
-
+Route::post('/register', [UsersController::class, 'actionRegisterPatient']);

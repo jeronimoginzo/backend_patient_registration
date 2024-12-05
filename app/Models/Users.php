@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Roles;
-use Illuminate\Foundation\Auth\User;
+use Exception;
 
 class Users extends Authenticatable
 {
@@ -22,16 +22,21 @@ class Users extends Authenticatable
         'file_url'
     ];
 
+    protected $casts = [
+        'name' => 'string',
+        'email' => 'string',
+        'cellphone' => 'string',
+        'file_url' => 'string',
+    ];
+
     public static function RegisterPatient(array $patientArray)
     {
         try {
             $user = new Users();
-            $user->fill([
-                'name' => $patientArray['name'],
-                'email' => $patientArray['email'],
-                'cellphone' => $patientArray['cellphone'],
-                'file_url' => $patientArray['file_url'],
-            ]);
+            $user->name = $patientArray['name'];
+            $user->email = $patientArray['email'];
+            $user->cellphone = $patientArray['cellphone'];
+            $user->file_url = $patientArray['file_url'];
             $user->role = Roles::PATIENT;
             $user->email_confirmation_sent = 0;
             $user->email_sent_on = null;
@@ -39,6 +44,8 @@ class Users extends Authenticatable
             $user->save();
             return  $user;
         } catch (Exception $e) {
+            \Log::error('Error on job: ' . $e->getMessage());
+            \Log::error($e->getTraceAsString());
             return null;;
         }
     }
